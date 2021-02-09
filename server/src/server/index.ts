@@ -46,14 +46,14 @@ export default class App {
 
         // Redirect all requests to index.html - for React-router
         this.app.use(async (ctx) => {
-            const index = path.join(this.staticFolderPath, '/index.html');
-
             try {
+                const index = path.join(this.staticFolderPath, '/index.html');
                 ctx.body = fs.readFileSync(index, 'utf8');
             } catch (error) {
                 log.error(error.message || error.toString());
             }
-        })
+        });
+
         this.app.on('error', errorMessage => {
             log.error(errorMessage);
         });
