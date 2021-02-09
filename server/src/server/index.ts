@@ -1,4 +1,4 @@
-import Koa from "koa";
+import Koa, {Context} from "koa";
 import serve from "koa-static";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
@@ -9,6 +9,7 @@ import {Env} from "../types";
 import {ConfigOptions} from "../types/config";
 import {Server as httpServer} from "http";
 import path from 'path';
+import fs from 'fs';
 
 export default class App {
     app: Koa;
@@ -25,7 +26,6 @@ export default class App {
 
     init(): App {
         this.app.use(ErrorHandler.handle);
-        this.app.use(serve(this.staticFolderPath));
 
         if (process.env.NODE_ENV !== Env.Prod) {
             this.origin = '*';
@@ -41,6 +41,19 @@ export default class App {
         this.app.use(router.allowedMethods());
         this.app.use(router.routes());
 
+        // Serve files from public static folder
+        this.app.use(serve(this.staticFolderPath));
+
+        // Redirect all requests to index.html - for React-router
+        this.app.use(async (ctx) => {
+            const index = path.join(this.staticFolderPath, '/index.html');
+
+            try {
+                ctx.body = fs.readFileSync(index, 'utf8');
+            } catch (error) {
+                log.error(error.message || error.toString());
+            }
+        })
         this.app.on('error', errorMessage => {
             log.error(errorMessage);
         });
