@@ -14,12 +14,13 @@ export default class App {
     app: Koa;
     origin: string;
     config: ConfigOptions;
-    staticFolderPath = path.join(__dirname, '../../../app/public');
+    staticFolderPath: string;
 
     constructor(config: ConfigOptions) {
         this.app = new Koa();
         this.config = config;
         this.origin = config.cors;
+        this.staticFolderPath = path.join(__dirname, '../../../app/public');
     }
 
     init(): App {

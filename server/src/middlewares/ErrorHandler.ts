@@ -9,7 +9,7 @@ export default class ErrorHandler {
     }
 
     private static buildErrorMessage(error: Error, ctx: Context) {
-        const status: number = ctx.status || 500;
+        const status: number = ctx.status || ErrorCode.internalServerError;
         const errorMessage: string = error.message || ErrorText.internalServerError;
 
         return `[${error.name}]:[${status} - ${errorMessage}]`;
