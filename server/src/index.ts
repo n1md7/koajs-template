@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import initDatabase from "./database";
+//import initDatabase from "./database";
 import config from "./config";
 import App from "./server";
 import log from './logger';

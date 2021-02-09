@@ -1,17 +1,20 @@
-import Koa from 'koa';
-import bodyParser from 'koa-bodyparser';
-import cors from '@koa/cors';
-import log from '../logger';
-import routes from '../routes';
-import ErrorHandler from '../middlewares/ErrorHandler';
-import {Env} from '../types';
-import {ConfigOptions} from '../types/config';
-import {Server as httpServer} from 'http';
+import Koa from "koa";
+import serve from "koa-static";
+import bodyParser from "koa-bodyparser";
+import cors from "@koa/cors";
+import log from "../logger";
+import routes from "../routes";
+import ErrorHandler from "../middlewares/ErrorHandler";
+import {Env} from "../types";
+import {ConfigOptions} from "../types/config";
+import {Server as httpServer} from "http";
+import path from 'path';
 
 export default class App {
     app: Koa;
     origin: string;
     config: ConfigOptions;
+    staticFolderPath = path.join(__dirname, '../../../app/public');
 
     constructor(config: ConfigOptions) {
         this.app = new Koa();
@@ -21,6 +24,7 @@ export default class App {
 
     init(): App {
         this.app.use(ErrorHandler.handle);
+        this.app.use(serve(this.staticFolderPath));
 
         if (process.env.NODE_ENV !== Env.Prod) {
             this.origin = '*';
