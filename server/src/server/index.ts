@@ -20,19 +20,19 @@ export default class App {
     constructor(config: ConfigOptions) {
         this.app = new Koa();
         this.config = config;
-        this.origin = config.cors;
-        this.staticFolderPath = path.join(__dirname, '../../../app/public');
+        // Makes publicly accessible React build folder
+        this.staticFolderPath = path.join(__dirname, '../../../app/build');
     }
 
     init(): App {
         this.app.use(ErrorHandler.handle);
 
         if (process.env.NODE_ENV !== Env.Prod) {
-            this.origin = '*';
+            this.config.cors = '*';
         }
 
         this.app.use(cors({
-            origin: this.origin
+            origin: this.config.cors
         }));
 
         this.app.use(bodyParser());
