@@ -1,8 +1,12 @@
 import dotenv from "dotenv";
+import {Env} from './types';
 
-dotenv.config();
+// When it is executed outside docker env - parse .env file
+if (process.env.EXEC_ENV !== Env.Docker) {
+    dotenv.config();
+}
 
-//import initDatabase from "./database";
+import initDatabase from "./database";
 import config from "./config";
 import App from "./server";
 import log from './logger';
@@ -10,7 +14,7 @@ import log from './logger';
 ( async () => {
     try {
         // When DB is not accessible fail the app
-        // await initDatabase();
+        await initDatabase();
         // Start Koa server
         new App(config).init().start();
     } catch (error) {

@@ -16,23 +16,24 @@ export default class App {
     origin: string;
     config: ConfigOptions;
     staticFolderPath: string;
+    indexFile: string;
 
     constructor(config: ConfigOptions) {
         this.app = new Koa();
         this.config = config;
         // Makes publicly accessible React build folder
-        this.staticFolderPath = path.join(__dirname, '../../../app/build');
+        this.staticFolderPath = path.join(__dirname, config.server.staticFolderPath);
     }
 
     init(): App {
         this.app.use(ErrorHandler.handle);
 
         if (process.env.NODE_ENV !== Env.Prod) {
-            this.config.cors = '*';
+            this.config.origin = '*';
         }
 
         this.app.use(cors({
-            origin: this.config.cors
+            origin: this.config.origin
         }));
 
         this.app.use(bodyParser());
@@ -47,7 +48,7 @@ export default class App {
         // Redirect all requests to index.html - for React-router
         this.app.use(async (ctx) => {
             try {
-                const index = path.join(this.staticFolderPath, '/index.html');
+                const index = path.join(this.staticFolderPath, this.config.server.indexFile);
                 ctx.body = fs.readFileSync(index, 'utf8');
             } catch (error) {
                 log.error(error.message || error.toString());
