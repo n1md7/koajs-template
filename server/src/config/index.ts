@@ -15,5 +15,12 @@ export default {
         },
         timeStampFormat: 'YYYY-MM-DD HH:mm:ss:ms',
         excludeUrlsFromLogger: ['/health-check']
+    },
+    mysql: {
+        host: 'localhost',
+        user: 'root',
+        database: 'admin',
+        debug: false,
+        connectionLimit: 100
     }
 }

@@ -1,7 +1,16 @@
 export type ConfigOptions = {
     server: ServerConfig,
     origin: string,
-    loggerOptions: LoggerOptions
+    loggerOptions: LoggerOptions,
+    mysql: MySql
+}
+
+type MySql = {
+    host: string,
+    user: string,
+    database: string,
+    debug: boolean,
+    connectionLimit: number,
 }
 
 export type ServerConfig = {
