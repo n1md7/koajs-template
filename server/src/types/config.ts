@@ -1,13 +1,15 @@
 export type ConfigOptions = {
     server: ServerConfig,
-    cors: string,
+    origin: string,
     loggerOptions: LoggerOptions
 }
 
 export type ServerConfig = {
     apiContextPath: string,
     hostname: string,
-    port: number
+    port: number,
+    staticFolderPath: string,
+    indexFile: string
 }
 
 export type LoggerOptions = {

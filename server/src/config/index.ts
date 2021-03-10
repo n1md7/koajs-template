@@ -2,9 +2,11 @@ export default {
     server: {
         apiContextPath: '/api',
         hostname: '0.0.0.0',
-        port: 8080
+        port: 8080,
+        staticFolderPath: '../../../game/build',
+        indexFile: '/index.html',
     },
-    cors: '*.domain.com',
+    origin: 'http://localhost:3000',
     loggerOptions: {
         fileOptions: {
             maxsize: 100000000,
