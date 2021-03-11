@@ -5,10 +5,11 @@ import logWrite from "../../logger";
 const initMySql = (mode: { debug: boolean } = {debug: false}): mysql.Pool => {
 
     const pool = mysql.createPool({
-        host: process.env.MYSQL_HOST || config.mysql.host,
-        user: process.env.MYSQL_USER || config.mysql.user,
-        connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT) || config.mysql.connectionLimit,
-        database: process.env.MYSQL_DB || config.mysql.database,
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USER,
+        connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT),
+        database: process.env.MYSQL_DB,
+        password: process.env.MYSQL_PASS,
         debug: config.mysql.debug,
         waitForConnections: true,
     });
