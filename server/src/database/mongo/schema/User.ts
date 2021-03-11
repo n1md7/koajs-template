@@ -3,8 +3,8 @@ import {Schema} from "mongoose";
 const collectionName = 'users';
 const UserSchema = new Schema({
     username: String,
-    firstName: String,
-    lastName: String
+    password: String,
+    status: String
 });
 
 export {

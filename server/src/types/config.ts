@@ -2,7 +2,8 @@ export type ConfigOptions = {
     server: ServerConfig,
     origin: string,
     loggerOptions: LoggerOptions,
-    mysql: MySql
+    mysql: MySql,
+    mongo: Mongo
 }
 
 type MySql = {
@@ -11,6 +12,14 @@ type MySql = {
     database: string,
     debug: boolean,
     connectionLimit: number,
+}
+
+type Mongo = {
+    host: string,
+    user: string,
+    database: string,
+    port: number,
+    pass: string,
 }
 
 export type ServerConfig = {

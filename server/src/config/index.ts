@@ -22,5 +22,12 @@ export default {
         database: 'admin',
         debug: false,
         connectionLimit: 100
+    },
+    mongo: {
+        host: 'localhost',
+        database: 'koa',
+        port: 27027,
+        user: 'koa',
+        pass: 'secret'
     }
 }

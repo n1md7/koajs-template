@@ -1,5 +1,5 @@
 export type UserType = {
-    firstName: string;
-    lastName: string;
     username: string;
+    password: string;
+    status: "active" | "blocked";
 };
