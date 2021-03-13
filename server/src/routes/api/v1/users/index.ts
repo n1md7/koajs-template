@@ -5,5 +5,6 @@ const userRouter = new Router();
 
 userRouter.get('/users', UserController.users);
 userRouter.get('/user', UserController.user);
+userRouter.get('/user/new', UserController.createNewUser);
 
 export default userRouter;
