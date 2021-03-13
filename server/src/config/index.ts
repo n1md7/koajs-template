@@ -17,17 +17,6 @@ export default {
         excludeUrlsFromLogger: ['/health-check']
     },
     mysql: {
-        host: 'localhost',
-        user: 'root',
-        database: 'admin',
         debug: false,
-        connectionLimit: 100
-    },
-    mongo: {
-        host: 'localhost',
-        database: 'koa',
-        port: 27027,
-        user: 'koa',
-        pass: 'secret'
     }
 }
