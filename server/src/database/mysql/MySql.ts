@@ -12,6 +12,7 @@ const initMySql = (mode: { debug: boolean } = {debug: false}): mysql.Pool => {
         password: process.env.MYSQL_PASS,
         debug: config.mysql.debug,
         waitForConnections: true,
+        port: +process.env.MYSQL_PORT
     });
     if (mode.debug) {
         logWrite.info(`MySql connection to database [${process.env.MYSQL_DB || config.mysql.database}] successfully established!`);

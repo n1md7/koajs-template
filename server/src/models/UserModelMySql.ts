@@ -4,7 +4,7 @@ import BaseModelMySql from "./BaseModelMySql";
 export default class UserModelMySql extends BaseModelMySql {
 
     public async getOneUser(): Promise<UserType[]> {
-        const [rows, fields] = await this.query("SELECT * FROM Users Limit 1");
+        const [rows, fields] = await this.query("SELECT * FROM users Limit 1");
 
         return rows.pop();
     }
