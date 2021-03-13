@@ -1,8 +1,9 @@
 import BaseController from './BaseController';
 import {Context} from 'koa';
 import User from "./User";
-import UserModel from "../../models/UserModel";
-import UserModelMySql from "../../models/UserModelMySql";
+import UserModel from "../../models/mongo/UserModel";
+import UserModelMySql from "../../models/mysql/UserModelMySql";
+import UserModelSequelize from "../../models/sequelize/User";
 
 class UserController extends BaseController implements User {
     public async user(ctx: Context): Promise<void> {
@@ -13,6 +14,11 @@ class UserController extends BaseController implements User {
     public async users(ctx: Context): Promise<void> {
         const model = new UserModel();
         ctx.body = await model.getAllUsers();
+    }
+
+    public async createNewUser(ctx: Context): Promise<void>{
+        const model = new UserModelSequelize();
+        ctx.body = await model.addNewUser();
     }
 }
 

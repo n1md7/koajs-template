@@ -1,5 +1,5 @@
-import {UserType} from "../types/user"
-import BaseModelMySql from "./BaseModelMySql";
+import {UserType} from "../../types/user"
+import BaseModelMySql from "../BaseModelMySql";
 
 export default class UserModelMySql extends BaseModelMySql {
 

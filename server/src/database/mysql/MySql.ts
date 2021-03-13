@@ -15,7 +15,7 @@ const initMySql = (mode: {debug: boolean} = {debug: false}): mysql.Pool => {
         port: +process.env.MYSQL_PORT
     });
     if (mode.debug) {
-        logWrite.info(`MySql connection to database [${process.env.MYSQL_DB || config.mysql.database}] successfully established!`);
+        logWrite.info(`MySql connection to database [${process.env.MYSQL_DB}] successfully established!`);
     }
     // Attempt to catch disconnects
     pool.on('connection', function (connection) {
