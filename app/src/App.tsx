@@ -13,7 +13,7 @@ function App() {
             <Route path="/sign-in" component={Authentication}/>
             <Route path="/sign-up" component={Registration}/>
             <ProtectedRoute path="/" exact component={Main}/>
-            <Redirect to="/sign-in"/>
+            <Redirect to="/"/>
         </Switch>
     );
 }

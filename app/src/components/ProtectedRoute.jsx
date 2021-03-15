@@ -1,20 +1,15 @@
-import React, {useEffect, useState,} from 'react';
+import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import useAuthStatus from '../hooks/useAuthStatus';
-import {useHistory} from 'react-router';
+import useTokenUpdate from "../hooks/useTokenUpdate";
 
 const ProtectedRoute = (props) => {
-    const [isAuth, isLoading, errorMessage] = useAuthStatus();
-    const history = useHistory();
+    const [isAuth, isLoading, errorMessage] = useTokenUpdate();
 
-    useEffect(() => {
-        console.log({
-            isAuth, isLoading, errorMessage, history
-        })
-        if (isAuth) {
-            // console.log(history);
-        }
-    }, [isAuth, isLoading, errorMessage]);
+    if (isLoading) {
+        return (
+            <div>Loading...</div>
+        );
+    }
 
     return !isAuth && !isLoading ?
         <Redirect to={{

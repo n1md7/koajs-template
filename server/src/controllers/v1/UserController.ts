@@ -36,8 +36,8 @@ class UserController extends BaseController implements UserInterface {
     // Provide user JWT expiration status
     public async status(ctx: MyContext): Promise<void> {
         const currentTimeSec = Math.ceil(new Date().valueOf() / 1000);
-        // Expires in minutes return as response body
-        ctx.body = Math.ceil(( ctx.store.exp - currentTimeSec ) / 60);
+        // Expires in [seconds] return as response body
+        ctx.body = ctx.store.exp - currentTimeSec;
     }
 
     public async refreshToken(ctx: MyContext): Promise<void> {
