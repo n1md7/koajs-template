@@ -13,3 +13,31 @@
 @import "~bootstrap/scss/tables";
 @import "~bootstrap/scss/nav";
 @import "~bootstrap/scss/alert";
+
+
+.create-account {
+  font-size: 10px;
+  color: #282c34;
+  text-decoration: none;
+}
+
+.App-logo {
+  pointer-events: none;
+  width: 256px;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,17 +1,17 @@
 import React from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
-import Authenticate from './pages/Authenticate';
+import Authentication from './pages/Authentication';
 import Main from './pages/Main';
-import UserSignUp from './pages/UserSignUp';
+import Registration from './pages/Registration';
 import './App.scss';
 
 function App() {
 
     return (
         <Switch>
-            <Route path="/sign-in" component={Authenticate}/>
-            <Route path="/sign-up" component={UserSignUp}/>
+            <Route path="/sign-in" component={Authentication}/>
+            <Route path="/sign-up" component={Registration}/>
             <ProtectedRoute path="/" exact component={Main}/>
             <Redirect to="/sign-in"/>
         </Switch>
