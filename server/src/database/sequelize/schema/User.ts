@@ -1,9 +1,10 @@
-import {INTEGER, STRING} from "sequelize";
-import mysqlSequelize from "../Sequelize";
+import {INTEGER, STRING, BIGINT} from "sequelize";
+import mysql from "../Sequelize";
 
-export default mysqlSequelize.define("users", {
+export const tableName = "users";
+export default mysql.define(tableName, {
     id: {
-        type: INTEGER({decimals: 11}),
+        type: BIGINT({decimals: 11}),
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
@@ -13,14 +14,18 @@ export default mysqlSequelize.define("users", {
         allowNull: false,
         unique: true
     },
-    firstName: {
-        type: STRING(32),
+    email: {
+        type: STRING(128),
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: STRING(512),
         allowNull: false
     },
-    lastName: {
-        type: STRING(32)
-    }
+    role: INTEGER({decimals: 2}),
+    active: INTEGER({decimals: 1}),
 }, {
-    tableName: 'users',
-    timestamps: false
+    tableName,
+    timestamps: true
 });

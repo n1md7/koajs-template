@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import logWrite from '../../logger';
-import config from '../../config';
 
 const initMongoDB = async (): Promise<typeof mongoose> => {
     const {

@@ -15,8 +15,5 @@ export default {
         },
         timeStampFormat: 'YYYY-MM-DD HH:mm:ss:ms',
         excludeUrlsFromLogger: ['/health-check']
-    },
-    mysql: {
-        debug: false,
     }
 }

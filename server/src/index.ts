@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import {initMongoDB, initMySql, Sequelize} from "./database";
+import {initMongoDB, Sequelize} from "./database";
 import config from "./config";
 import Server from "./server";
 import logWrite from './logger';
@@ -12,7 +12,6 @@ import logWrite from './logger';
         // When DB is not accessible fail the app
         await initMongoDB();
         await Sequelize.authenticate();
-        await initMySql({debug: true});
         // Start Koa server
         const koa = new Server(config);
         koa.init();
