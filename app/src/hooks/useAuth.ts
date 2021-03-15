@@ -15,15 +15,19 @@ export default function useAuth(): [boolean, boolean, string] {
         if (!token) {
             return history.push('/sign-in');
         }
+        store.dispatch(actionUpdate({token}));
         httpClient
             .get<AxiosResponse>('v1/user/status')
             .then((data) => {
                 setIsAuth(Boolean(data.status !== 401));
-                store.dispatch(actionUpdate({token}));
             })
             .catch(({message}) => setError(message))
             .then(() => setLoading(false))
     }, []);
+
+    useEffect(() => {
+        // TODO make timer there to update token
+    })
 
     return [isAuth, isLoading, error];
 };
