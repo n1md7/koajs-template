@@ -3,23 +3,49 @@ import {Context} from 'koa';
 import UserInterface from "./UserInterface";
 import UserModel from "../../models/mongo/UserModel";
 import UserModelSequelize, {UserType} from "../../models/sequelize/UserModel";
-import {createUserSchema, authUserSchema} from './validators/UserRequestValidator';
+import {authUserSchema, createUserSchema} from './validators/UserRequestValidator';
 import {HttpCode} from '../../types/errorHandler';
 import JsonWebToken from 'jsonwebtoken';
+import {MyContext} from '../../types/koa';
+import Joi from 'joi';
 
 export type JwtPayload = {
     username: string;
     email: string;
     userId: number;
+    iat?: number;
+    exp?: number;
 };
 
 class UserController extends BaseController implements UserInterface {
+    private static generateNewJWT(payload: JwtPayload): string {
+
+        return JsonWebToken.sign(
+            payload,
+            process.env.JWT_SECRET,
+            {
+                expiresIn: process.env.JWT_EXPIRES_IN,
+            }
+        );
+    }
+
     public async user(ctx: Context): Promise<void> {
         ctx.body = 'ups...';
     }
 
-    public async status(ctx: Context): Promise<void> {
-        ctx.status = 200;
+    // Provide user JWT expiration status
+    public async status(ctx: MyContext): Promise<void> {
+        const currentTimeSec = Math.ceil(new Date().valueOf() / 1000);
+        // Expires in minutes return as response body
+        ctx.body = Math.ceil(( ctx.store.exp - currentTimeSec ) / 60);
+    }
+
+    public async refreshToken(ctx: MyContext): Promise<void> {
+        ctx.body = UserController.generateNewJWT({
+            userId: ctx.store.userId,
+            username: ctx.store.username,
+            email: ctx.store.email
+        });
     }
 
     public async users(ctx: Context): Promise<void> {
@@ -27,9 +53,10 @@ class UserController extends BaseController implements UserInterface {
         ctx.body = await model.getAllUsers();
     }
 
+    // User registration
     public async createNewUser(ctx: Context): Promise<void> {
         const validation = createUserSchema.validate(ctx.request.body);
-        if (validation.error) {
+        if (validation.error as Joi.ValidationError) {
             throw new Error(validation.error.details.pop().message);
         }
         if (validation.value.password !== validation.value.confirmPassword) {
@@ -41,9 +68,10 @@ class UserController extends BaseController implements UserInterface {
         ctx.status = HttpCode.created;
     }
 
+    // User authentication
     public async authenticateUser(ctx: Context): Promise<void | typeof ctx.status> {
         const validation = authUserSchema.validate(ctx.request.body);
-        if (validation.error) {
+        if (validation.error as Joi.ValidationError) {
             throw new Error(validation.error.details.pop().message);
         }
         const model = new UserModelSequelize();
@@ -53,19 +81,11 @@ class UserController extends BaseController implements UserInterface {
         }
 
         // Generate JsonWebToke for authentication
-        const payload: JwtPayload = {
+        ctx.body = UserController.generateNewJWT({
             userId: user.id,
             username: user.username,
             email: user.email
-        };
-
-        ctx.body = JsonWebToken.sign(
-            payload,
-            process.env.JWT_SECRET,
-            {
-                expiresIn: process.env.JWT_EXPIRES_IN,
-            }
-        );
+        });
     }
 }
 

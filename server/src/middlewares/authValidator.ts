@@ -6,7 +6,7 @@ export default async function authValidator(ctx: Context, next: Next): Promise<v
     ctx.store = ctx.store || {};
     const token = ctx.get(process.env.JWT_HEADER_NAME);
     // verify token
-    ctx.store = await JsonWebToken.verify(token) as JwtPayload;
+    ctx.store = await JsonWebToken.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
     await next();
 }

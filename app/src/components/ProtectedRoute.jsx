@@ -1,10 +1,10 @@
 import React, {useEffect, useState,} from 'react';
 import {Redirect, Route} from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuthStatus from '../hooks/useAuthStatus';
 import {useHistory} from 'react-router';
 
 const ProtectedRoute = (props) => {
-    const [isAuth, isLoading, errorMessage] = useAuth();
+    const [isAuth, isLoading, errorMessage] = useAuthStatus();
     const history = useHistory();
 
     useEffect(() => {

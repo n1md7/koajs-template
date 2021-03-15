@@ -4,7 +4,7 @@ import {httpClient} from '../services/HttpClient';
 import {AxiosResponse} from 'axios';
 import {useHistory} from 'react-router';
 
-export default function useAuth(): [boolean, boolean, string] {
+export default function useAuthStatus(): [boolean, boolean, string] {
     const [isLoading, setLoading] = useState<boolean>(true);
     const [isAuth, setIsAuth] = useState<boolean>(false);
     const [error, setError] = useState<string>("");

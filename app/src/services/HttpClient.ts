@@ -16,7 +16,7 @@ const config: Config = {
     timeout: 5000,
     headers: {},
     validateStatus: function (status: number) {
-        return ( status >= 200 && status < 300 ) || [401, 403].includes(status);
+        return ( status >= 200 && status < 300 ) || [400, 401, 403].includes(status);
     },
 };
 
