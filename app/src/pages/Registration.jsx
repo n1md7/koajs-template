@@ -11,7 +11,7 @@ export default function Registration() {
     const [password, setPassword] = useInputChange('');
     const [email, setEmail] = useInputChange('');
     const [confirmPassword, setConfirmPassword] = useInputChange('');
-    const [regHandler, isOk, regError, requestSend] = useRegister();
+    const [regHandler, isOk, regError, responseModifed] = useRegister();
     const history = useHistory();
 
     const onSubmit = (e) => {
@@ -25,7 +25,7 @@ export default function Registration() {
             history.push('/sign-in');
         }
         regError && Alert(regError, AlertType.ERROR);
-    }, [requestSend]);
+    }, [responseModifed]);
 
     return (
         <div className="container">

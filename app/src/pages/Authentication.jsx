@@ -9,7 +9,7 @@ import logo from "../img/logo.png";
 export default function Authentication() {
     const [username, setUsername] = useInputChange('');
     const [password, setPassword] = useInputChange('');
-    const [authHandler, isOk, authError, requestSend] = useAuthenticate();
+    const [authHandler, isOk, authError, responseModified] = useAuthenticate();
     const history = useHistory();
 
     const onSubmit = (e) => {
@@ -23,7 +23,7 @@ export default function Authentication() {
             history.push('/');
         }
         authError && Alert(authError, AlertType.ERROR);
-    }, [requestSend]);
+    }, [responseModified]);
 
     return (
         <div className="container">
