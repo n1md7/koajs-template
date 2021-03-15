@@ -2,6 +2,7 @@ import {useState} from "react";
 import store, {actionUpdate} from "../services/TokenStore";
 import {httpClient} from '../services/HttpClient';
 import {AxiosResponse} from 'axios';
+import {Token} from '../types';
 
 type Auth = {
     username: string;
@@ -21,7 +22,7 @@ export default function useAuthenticate(): [(payload: Auth) => void, boolean, st
                     // Dispatch to redux-store to update headers of httpClient
                     store.dispatch(actionUpdate({token: response.data}));
                     // Save in localStorage
-                    localStorage.setItem("token", response.data);
+                    localStorage.setItem(Token.name, response.data);
                     setError("");
                 } else if (response.status === 400) {
                     setError(response.data);

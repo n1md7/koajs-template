@@ -3,6 +3,7 @@ import store, {actionUpdate} from "../services/TokenStore";
 import {httpClient} from '../services/HttpClient';
 import {AxiosResponse} from 'axios';
 import {useHistory} from 'react-router';
+import {Token} from '../types';
 
 export default function useTokenUpdate(): [boolean, boolean, string] {
     const [isAuth, setIsAuth] = useState<boolean>(false);
@@ -38,7 +39,7 @@ export default function useTokenUpdate(): [boolean, boolean, string] {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem(Token.name);
         // No token = no authenticated
         if (!token) {
             return history.push('/sign-in');
