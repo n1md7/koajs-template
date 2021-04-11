@@ -3,7 +3,7 @@ export default {
         apiContextPath: '/api',
         hostname: '0.0.0.0',
         port: 8080,
-        staticFolderPath: '../../../game/build',
+        staticFolderPath: '../../../app/build',
         indexFile: '/index.html',
     },
     origin: 'http://localhost:3000',
