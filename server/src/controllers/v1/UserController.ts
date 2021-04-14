@@ -80,7 +80,15 @@ class UserController extends BaseController implements UserInterface {
     ctx.status = HttpCode.created;
   }
 
-  // User authentication
+  /**
+   * Authenticates user - public route
+   * @param {object} ctx - Koa context
+   * @param {object} ctx.request - Koa request
+   * @param {object} ctx.params.body - Koa request body
+   * @param {string} ctx.params.body.username - username value
+   * @param {string} ctx.params.body.password - password value
+   * @param {boolean} ctx.params.body.rememberMe - rememberMe state
+   */
   public async authenticateUser(ctx: Context): Promise<void | typeof ctx.status> {
     const validation = authUserSchema.validate(ctx.request.body);
     if (validation.error as Joi.ValidationError) {
@@ -113,6 +121,13 @@ class UserController extends BaseController implements UserInterface {
     return StringUtils.randomChars(128);
   }
 
+
+  /**
+   * Restores expired token from cache with refreshToken value - public route
+   * @param {object} ctx - koa context
+   * @param {object} ctx.params - koa request GET params
+   * @param {string} ctx.params.key - koa request GET param [key]
+   */
   public async restoreExpiredToken(ctx: Context): Promise<void | number> {
     const token: string = ctx.params.key;
     if (!rememberMeTokens.has(token)) {
