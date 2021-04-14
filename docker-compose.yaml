@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   mongo:
-    container_name: mongo-db
+    container_name: mongo-db-koa
     image: mongo
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
     networks:
       - mongo-net
   mongo-express:
-    container_name: mongo-express
+    container_name: mongo-express-koa
     depends_on:
       - mongo
     image: mongo-express
@@ -29,7 +29,7 @@ services:
     networks:
       - mongo-net
   mysql:
-    container_name: mysql
+    container_name: mysql-koa
     image: 'mysql:8.0'
     restart: unless-stopped
     ports:
@@ -48,7 +48,7 @@ services:
     depends_on:
       - mysql
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin-koa
     restart: unless-stopped
     networks:
       - mysql-net

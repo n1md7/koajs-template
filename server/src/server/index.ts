@@ -14,7 +14,7 @@ import SocketModule from "../socket";
 import serveIndexHTML from '../middlewares/serveIndexHTML';
 import handleApiNotFound from '../middlewares/handleApiNotFound';
 import swagger, {loadDocumentSync} from 'swagger2';
-import {ui, validate} from "swagger2-koa";
+import {ui} from "swagger2-koa";
 
 export default class Server {
   koa: Koa;
@@ -33,7 +33,7 @@ export default class Server {
     if (process.env.NODE_ENV === Env.Prod) {
       this.config.origin = process.env.ORIGIN;
     }
-    this.swaggerDocument = loadDocumentSync(path.join(__dirname, "../../api.yaml")) as swagger.Document;
+    this.swaggerDocument = loadDocumentSync(path.join(__dirname, config.server.swaggerApiPath)) as swagger.Document;
   }
 
   init(): Server {
@@ -45,7 +45,7 @@ export default class Server {
       this.config.server.indexFile,
     );
     if (process.env.NODE_ENV !== Env.Prod) {
-      this.koa.use(ui(this.swaggerDocument, "/swagger"));
+      this.koa.use(ui(this.swaggerDocument, this.config.server.swaggerContextPath));
     }
     this.koa.use(handleErrors);
     this.koa.use(cors({
@@ -93,11 +93,11 @@ export default class Server {
   }
 
   startServer(): HttpServer {
-    const {port, hostname, apiContextPath} = this.config.server;
+    const {port, hostname, swaggerContextPath} = this.config.server;
 
     return this.httpServer.listen(port, hostname, () => {
       logWrite.debug(`Health-check - http://${hostname}:${port}/health-check`);
-      logWrite.debug(`Swagger UI - http://${hostname}:${port}/swagger`);
+      logWrite.debug(`Swagger UI - http://${hostname}:${port}/${swaggerContextPath}`);
       logWrite.debug('Server (re)started!');
     });
   }
