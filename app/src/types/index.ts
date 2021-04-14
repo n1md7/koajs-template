@@ -1,3 +1,17 @@
 export enum Token {
-    name = "token"
+  jwt = "jwt-token",
+  refresh = "refresh-token"
 }
+
+export type UserType = {
+  id: number;
+  username: string;
+  email: string;
+  role: UserRole
+}
+
+export enum UserRole {
+  basic = 1,
+  admin
+}
+
